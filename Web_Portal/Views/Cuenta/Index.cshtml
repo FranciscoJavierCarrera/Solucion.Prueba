@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Cuentas";
+
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="font-size:16px">
+        @ViewBag.Title
+
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <a class="btn btn-primary pull-right" href="@Url.Action("Crud", "Cuenta", new { id = 0 })" style="margin-right:15px;"><span class="glyphicon glyphicon-plus"></span> Nuevo</a>
+        </div>
+        <div class="row">
+            <div id="contenidoCuenta">
+                <div class="table-responsive">
+                    <table id="tableCuenta" class="table table-stripped" width="100%"
+                           data-filtering="true"
+                           data-filter="#filter" data-paging="true">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Cuenta</th>
+                                <th>Cliente</th>
+                                <th>NumeroCuenta</th>
+                                <th>Saldo</th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.TipoCuentaDescripcion
+                                    </td>
+                                    <td>@item.ClienteNombre</td>
+                                    <td>@item.NumeroCuenta</td>
+                                    <td>@item.Saldo</td>
+
+                                    <td>
+                                        <a class="btn btn-xs btn-primary " href="@Url.Action("Crud", "Cuenta", new { id = item.Id })">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

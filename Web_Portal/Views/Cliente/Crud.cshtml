@@ -1,0 +1,72 @@
+﻿@using Solucion.prueba.Dtos
+@model ClienteEditDto
+
+@{
+    ViewBag.Title = "Clientes";
+    string Mensaje = ViewBag.Mensaje;
+
+}
+
+
+<div class="row">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading" style="font-size:16px">
+            @(Model.Id > 0 ? "Cliente: " + Model.NumeroIdentificacion : "Nuevo Cliente")
+        </div>
+       
+        <div class="panel-body">
+            <form method="post">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.LabelFor(model => model.NumeroIdentificacion, "Numero de Identificacion", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.NumeroIdentificacion, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.NumeroIdentificacion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    @Html.LabelFor(model => model.Nombre, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.Nombre, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ApellidoP, "Apellido Paterno ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.ApellidoP, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.ApellidoP, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ApellidoM, "Apellido Materno", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.ApellidoM, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.ApellidoM, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    @Html.LabelFor(model => model.Direcion, "Direccion", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.Direcion, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.Direcion, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.Telefono, "Teléfono", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.Telefono, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.Telefono, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-right:10px;" id="Guardar"><i class="glyphicon glyphicon-floppy-disk"></i>@(Model.Id > 0 ? " Actualizar" : " Guardar")</button>
+                    <a class="btn btn-default pull-right" href="@Url.Action("Index", "Cliente")" style="margin-right:15px;"><i class="glyphicon glyphicon-backward"></i> Regresar</a>
+                </div>
+            </form>
+        </div>
+       
+
+      
+        
+    </div>
+</div>

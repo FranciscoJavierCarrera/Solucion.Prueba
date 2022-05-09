@@ -1,0 +1,100 @@
+﻿
+@using Solucion.prueba.Dtos
+@model CuentaDetailDto
+
+@{
+    ViewBag.Title = "Cuenta";
+    string Mensaje = ViewBag.Mensaje;
+    List<TipoMovimientoDto> tmovs = ViewBag.TipoMovs;
+}
+
+<div class="row">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading" style="font-size:16px">
+            @(Model.Id > 0 ? "Cuenta: " + Model.NumeroCuenta : "Nueva Cuenta")
+        </div>
+
+        <div class="panel-body">
+            <form method="post">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.LabelFor(model => model.NumeroCuenta, "Numero de Cuenta", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.NumeroCuenta, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.NumeroCuenta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    @Html.LabelFor(model => model.ClienteId, "Cliente", htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(model => model.ClienteId, (SelectList)ViewBag.clientes, "--Seleccionar--", htmlAttributes: new { @class = "form-control mi-selector" })
+                    </div>
+
+
+
+                    @Html.LabelFor(model => model.TipoCuentaId, "Tipo de cuenta", htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-2">
+                        @Html.DropDownListFor(model => model.TipoCuentaId, (SelectList)ViewBag.TipoCuentas, "--Seleccionar--", htmlAttributes: new { @class = "form-control mi-selector" })
+                    </div>
+                    @Html.LabelFor(model => model.Saldo, "Saldo", htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.Saldo, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.Saldo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-right:10px;" id="Guardar"><i class="glyphicon glyphicon-floppy-disk"></i>@(Model.Id > 0 ? " Actualizar" : " Guardar")</button>
+                    <a class="btn btn-default pull-right" href="@Url.Action("Index", "Cuenta")" style="margin-right:15px;"><i class="glyphicon glyphicon-backward"></i> Regresar</a>
+                </div>
+            </form>
+            <div class="row">
+                @Html.Partial("_Abonar", new MovimientoDto { CuentaId = Model.Id })
+            </div>
+            <div class="row">
+                @if (Model.Movimientos != null)
+                {
+                    <div id="contenidoMov">
+                        <div class="table-responsive">
+                            <table id="tableMov" class="table table-stripped" width="100%"
+                                   data-filtering="true"
+                                   data-filter="#filter" data-paging="true">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Movimiento</th>
+                                        <th>Monto</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Movimientos)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @tmovs.FirstOrDefault(c => c.Id == item.TipoMovimientoId).Descripcion
+                                            </td>
+                                            <td>@item.Monto</td>
+                                            <td>@item.Fecha</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<script src="~/Scripts/peticiones/appAbonar.js"></script>
